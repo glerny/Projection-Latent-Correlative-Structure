@@ -2,19 +2,14 @@
 % OptAxis4fitcdiscr is used to select 2 to 5 axes that provide the best
 % combination for clustering or classification. It has been designed for
 % PLCS but should work for other data reduction approaches. In input,
-% Structure is the data structure, a [MxN] matrix,  with, in lines, the
-% axes and, in columns, the samples. Y in a [N] vector of tag that defined
-% the belonging of each sample to a given group. nbrAxis (2 to 5) id the
-% number of final axes that aim to be obtained and DiscrimType is either
-% 'linear' or 'quadratic'. In the output, an 8XM table is obtained and
-% contained classification results using a soft discriminant analysis
-% classification(d^2 <= 3). The first column (AxisXomb) indicate the
-% combination of Axes under investigation. nm is the number of samples
-% classified into two or more categories; ns is the number of samples
-% accurately classified; no is the number of unclassified samples; ms is
-% the number of samples classified to the wrong category; tb is nm+ms. Best
-% selection axis is the one with the lowest tb. DAModel is the
-% classification discriminant model.
+% Xtrain, YTrain, Xtest, Ytest are the data and class labels of the training 
+% and test set respectively, nbrAxis is the number of latent variables to be
+% used in the discriminant analysis model and DiscrimType is the discriminant 
+% model ("linear", "quadratic", see help fitcdiscr for more information).
+%
+% In output, Results in the table with the LV that were test (AxisComb), the 
+% confusion  matrices for hard and soft classification, the number of accuratly 
+% classidied samples in the test sample (n_hard and n_soft) and the Model (DAModel)
 %
 %% REFERENCES
 % If you are using OptAxis4fitcdiscr, please use the following reference(s):
@@ -43,7 +38,6 @@ function Results  = OptAxis4fitcdiscr(XTrain, YTrain, XTest, YTest, nbrAxis, Dis
 % TOCHECK: What if Y not ordered
 YCat   = unique(YTrain);
 nGps   = numel(YCat);
-Alfa4Outlier = 0.01;
 Alfa4SoftDA = 0.05;
 
 % 1. Find all possible combination of Axis
